@@ -36,14 +36,12 @@
       radial-gradient(ellipse 80% 60% at 50% 40%,  rgba(26,45,90,.9)   0%, transparent 80%);
   }
 
-  /* ── layout ─────────────────────────────────────── */
   .wrap {
     position: relative; z-index: 1;
     max-width: 860px; margin: 0 auto;
     padding: clamp(24px, 5vw, 48px) clamp(14px, 4vw, 28px) 60px;
   }
 
-  /* ── cards ──────────────────────────────────────── */
   .card {
     background: rgba(13,27,62,.8);
     backdrop-filter: blur(20px);
@@ -59,7 +57,6 @@
     box-shadow: 0 0 50px rgba(201,168,76,.1), 0 0 100px rgba(46,196,165,.04);
   }
 
-  /* ── header ─────────────────────────────────────── */
   .header { text-align: center; margin-bottom: clamp(24px, 5vw, 40px); }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 10px;
@@ -80,7 +77,6 @@
   }
   .gold-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin-top: 22px; }
 
-  /* ── legend ─────────────────────────────────────── */
   .legend {
     font-size: clamp(.65rem, 2vw, .73rem);
     color: rgba(201,168,76,.65);
@@ -90,19 +86,16 @@
   }
   .legend b.hi { color: var(--jade); }
 
-  /* ── section title ───────────────────────────────── */
   .sec-title {
     font-family: 'Playfair Display', serif; font-size: clamp(.95rem, 3vw, 1.1rem);
     color: var(--gold-light); font-weight: 600;
   }
   .sec-sub { font-size: .72rem; color: rgba(245,240,232,.3); margin-top: 3px; }
 
-  /* ══════════════════════════════════════════════════
-     DESKTOP TABLE HEADER  (hidden on mobile)
-  ══════════════════════════════════════════════════ */
+  /* ── TABLE HEADER ── */
   .tbl-header {
     display: grid;
-    grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px 115px;
+    grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px;
     padding: 4px 4px 6px;
     border-bottom: 1px solid rgba(201,168,76,.12);
     margin-bottom: 4px;
@@ -116,12 +109,10 @@
   .th-emd { color: rgba(228,201,126,.55) !important; }
   .th-moy { color: rgba(46,196,165,.55) !important; }
 
-  /* ══════════════════════════════════════════════════
-     SUBJECT ROW  (desktop: horizontal | mobile: card)
-  ══════════════════════════════════════════════════ */
+  /* ── SUBJECT ROW ── */
   .subject-row {
     display: grid;
-    grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px 115px;
+    grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px;
     align-items: center;
     background: rgba(255,255,255,.024);
     border-radius: 10px;
@@ -129,22 +120,18 @@
     transition: background .2s;
   }
   .subject-row:hover { background: rgba(201,168,76,.05); }
-
   .subject-row > .cell {
     padding: 10px 8px;
     display: flex; align-items: center; justify-content: center;
   }
   .subject-row > .cell:first-child { justify-content: flex-start; padding-left: 14px; }
 
-  /* hide mobile labels on desktop */
   .mob-label { display: none; }
 
-  /* ══════════════════════════════════════════════════
-     FOOTER ROW
-  ══════════════════════════════════════════════════ */
+  /* ── FOOTER ROW ── */
   .tbl-footer {
     display: grid;
-    grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px 115px;
+    grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px;
     align-items: center;
     border-top: 1px solid rgba(201,168,76,.15);
     padding: 10px 4px 4px;
@@ -153,9 +140,7 @@
   .tbl-footer > div { padding: 4px 8px; text-align: center; }
   .tbl-footer > div:first-child { text-align: left; padding-left: 14px; }
 
-  /* ══════════════════════════════════════════════════
-     ELEMENTS: badges, inputs, buttons
-  ══════════════════════════════════════════════════ */
+  /* ── ELEMENTS ── */
   .mat-name { font-weight: 600; font-size: clamp(.82rem, 2.5vw, .92rem); }
 
   .coef-badge {
@@ -173,51 +158,19 @@
     user-select: none;
   }
 
-  .emd-input {
-    width: 80px; padding: 7px 6px;
-    background: rgba(228,201,126,.08);
-    border: 1.5px solid rgba(201,168,76,.35);
-    border-radius: 9px; color: var(--gold-light);
-    font-family: 'Outfit', sans-serif; font-size: .88rem; font-weight: 600;
-    text-align: center; outline: none;
-    transition: border-color .2s, background .2s, box-shadow .2s;
-    /* touch target */
-    min-height: 40px;
-    -webkit-appearance: none;
-  }
-  .emd-input:focus {
-    border-color: var(--gold);
-    background: rgba(201,168,76,.13);
-    box-shadow: 0 0 0 3px rgba(201,168,76,.14);
-  }
-  .emd-input.modified {
-    border-color: var(--amber);
-    background: rgba(245,166,35,.1);
-    color: var(--amber);
-  }
-
-  .emd-locked {
+  /* All EMD cells in the table are now locked-style */
+  .emd-locked-display {
     display: inline-flex; align-items: center; gap: 5px;
-    padding: 6px 10px; border-radius: 9px;
+    padding: 6px 12px; border-radius: 9px;
     background: rgba(255,255,255,.04);
     border: 1.5px solid rgba(255,255,255,.07);
-    color: rgba(245,240,232,.28); font-size: .86rem; font-weight: 500;
-    user-select: none; min-height: 40px;
+    color: rgba(245,240,232,.38); font-size: .86rem; font-weight: 500;
+    user-select: none; min-height: 38px;
   }
-
-  .btn-restore {
-    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-    padding: 6px 10px; border-radius: 8px;
-    background: rgba(245,166,35,.1); border: 1px solid rgba(245,166,35,.35);
-    color: var(--amber); font-family: 'Outfit', sans-serif;
-    font-size: .7rem; font-weight: 600; cursor: pointer;
-    transition: background .2s, transform .15s;
-    white-space: nowrap; min-height: 36px;
-    -webkit-tap-highlight-color: transparent;
+  .emd-locked-display.editable-src {
+    border-color: rgba(201,168,76,.2);
+    color: rgba(228,201,126,.55);
   }
-  .btn-restore:hover { background: rgba(245,166,35,.2); }
-  .btn-restore:active { transform: scale(.95); }
-  .btn-restore.hidden { visibility: hidden; pointer-events: none; }
 
   .moy-badge {
     display: inline-block; padding: 5px 13px; border-radius: 999px;
@@ -229,8 +182,101 @@
   .moy-fail  { background: rgba(224,92,92,.15);   color: var(--coral); border: 1px solid rgba(224,92,92,.35); }
 
   /* ══════════════════════════════════════════════════
-     RESULT SECTION
+     EMD CONTROL SECTION  (4 inputs in one line)
   ══════════════════════════════════════════════════ */
+  .emd-control-section {
+    background: rgba(13,27,62,.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(201,168,76,.28);
+    border-radius: 20px;
+    padding: clamp(16px, 4vw, 26px) clamp(16px, 4vw, 28px);
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .emd-control-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), rgba(46,196,165,.6), transparent);
+  }
+
+  .emd-ctrl-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px; flex-wrap: wrap; gap: 8px;
+  }
+  .emd-ctrl-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .62rem; text-transform: uppercase; letter-spacing: .2em;
+    color: var(--gold); background: rgba(201,168,76,.1);
+    border: 1px solid rgba(201,168,76,.25); border-radius: 999px;
+    padding: 4px 12px;
+  }
+
+  .emd-inputs-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .emd-ctrl-item {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(201,168,76,.12);
+    border-radius: 14px;
+    padding: 14px 10px 12px;
+    transition: border-color .2s, background .2s;
+  }
+  .emd-ctrl-item:focus-within {
+    border-color: rgba(201,168,76,.4);
+    background: rgba(201,168,76,.04);
+  }
+
+  .emd-ctrl-label {
+    font-size: .7rem; font-weight: 600; letter-spacing: .06em;
+    color: var(--gold-light); text-align: center; line-height: 1.3;
+  }
+  .emd-ctrl-sublabel {
+    font-size: .58rem; color: rgba(245,240,232,.3); text-align: center;
+    margin-top: -6px;
+  }
+
+  .emd-ctrl-input {
+    width: 90px; padding: 9px 6px;
+    background: rgba(228,201,126,.08);
+    border: 1.5px solid rgba(201,168,76,.35);
+    border-radius: 10px; color: var(--gold-light);
+    font-family: 'Outfit', sans-serif; font-size: .96rem; font-weight: 700;
+    text-align: center; outline: none;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+    min-height: 44px;
+    -webkit-appearance: none;
+  }
+  .emd-ctrl-input:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,.13);
+    box-shadow: 0 0 0 3px rgba(201,168,76,.14);
+  }
+  .emd-ctrl-input.modified {
+    border-color: var(--amber);
+    background: rgba(245,166,35,.1);
+    color: var(--amber);
+  }
+
+  .emd-ctrl-restore {
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 5px 10px; border-radius: 8px;
+    background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.28);
+    color: rgba(245,166,35,.6); font-family: 'Outfit', sans-serif;
+    font-size: .68rem; font-weight: 600; cursor: pointer;
+    transition: background .2s, color .2s, transform .15s;
+    white-space: nowrap; min-height: 30px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .emd-ctrl-restore:hover { background: rgba(245,166,35,.18); color: var(--amber); }
+  .emd-ctrl-restore:active { transform: scale(.95); }
+  .emd-ctrl-restore.hidden { visibility: hidden; pointer-events: none; }
+
+  /* ── RESULT SECTION ── */
   .res-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -266,9 +312,7 @@
   .pill-warn { background: rgba(245,166,35,.15);  color: var(--amber); border: 1px solid rgba(245,166,35,.35); }
   .pill-fail { background: rgba(224,92,92,.15);   color: var(--coral); border: 1px solid rgba(224,92,92,.35); }
 
-  /* ══════════════════════════════════════════════════
-     ANIMATIONS
-  ══════════════════════════════════════════════════ */
+  /* ── ANIMATIONS ── */
   @keyframes pop { 0%{transform:scale(1)} 45%{transform:scale(1.18)} 100%{transform:scale(1)} }
   .pop { animation: pop .22s ease; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -276,16 +320,12 @@
   .fd1 { animation-delay: .07s; }
   .fd2 { animation-delay: .2s; }
   .fd3 { animation-delay: .34s; }
+  .fd4 { animation-delay: .44s; }
 
-  /* ══════════════════════════════════════════════════
-     MOBILE  ≤ 620px  — card layout
-  ══════════════════════════════════════════════════ */
+  /* ── MOBILE ≤ 620px ── */
   @media (max-width: 620px) {
-
-    /* hide desktop table header */
     .tbl-header { display: none; }
 
-    /* each row becomes a mini-card */
     .subject-row {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -293,7 +333,7 @@
       grid-template-areas:
         "name   coef"
         "td     emd"
-        "moy    restore";
+        "moy    moy2";
       gap: 8px 10px;
       padding: 14px 14px;
       border-radius: 14px;
@@ -302,14 +342,12 @@
     }
     .subject-row:hover { background: rgba(255,255,255,.024); }
 
-    .cell-name    { grid-area: name;    padding: 0; justify-content: flex-start; }
-    .cell-coef    { grid-area: coef;    padding: 0; justify-content: flex-end; align-items: flex-start; }
-    .cell-td      { grid-area: td;      padding: 0; justify-content: flex-start; }
-    .cell-emd     { grid-area: emd;     padding: 0; justify-content: flex-end; }
-    .cell-moy     { grid-area: moy;     padding: 0; justify-content: flex-start; }
-    .cell-restore { grid-area: restore; padding: 0; justify-content: flex-end; align-items: center; }
+    .cell-name { grid-area: name;  padding: 0; justify-content: flex-start; }
+    .cell-coef { grid-area: coef;  padding: 0; justify-content: flex-end; align-items: flex-start; }
+    .cell-td   { grid-area: td;    padding: 0; justify-content: flex-start; }
+    .cell-emd  { grid-area: emd;   padding: 0; justify-content: flex-end; }
+    .cell-moy  { grid-area: moy;   padding: 0; justify-content: flex-start; }
 
-    /* show mobile labels */
     .mob-label {
       display: inline-block;
       font-size: .6rem; text-transform: uppercase; letter-spacing: .14em;
@@ -318,24 +356,21 @@
     .mob-label-emd { color: rgba(228,201,126,.5); }
     .mob-label-moy { color: rgba(46,196,165,.5); }
 
-    /* tighter footer on mobile */
     .tbl-footer {
       display: flex; justify-content: space-between; align-items: center;
       flex-wrap: wrap; gap: 6px;
     }
     .tbl-footer-hidden { display: none; }
 
-    /* touch-friendly inputs */
-    .emd-input { width: 84px; min-height: 42px; font-size: .9rem; }
-    .emd-locked { min-height: 42px; }
-    .btn-restore { min-height: 36px; padding: 6px 10px; }
+    /* EMD control section — 2x2 grid on mobile */
+    .emd-inputs-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  /* ── very small screens < 360px ─────────────────── */
-  @media (max-width: 360px) {
-    .emd-input { width: 72px; }
-    .mat-name { font-size: .78rem; }
-    .td-val { padding: 5px 8px; font-size: .78rem; }
+  @media (max-width: 400px) {
+    .emd-inputs-row { grid-template-columns: repeat(2, 1fr); }
+    .emd-ctrl-input { width: 80px; }
   }
 </style>
 </head>
@@ -346,8 +381,8 @@
   <header class="header fu fd1">
     <div class="eyebrow">
       <span class="eyebrow-line"></span>
- 4ème Année — System Classic
-       <span class="eyebrow-line rev"></span>
+      4ème Année — System Classic
+      <span class="eyebrow-line rev"></span>
     </div>
     <h1>Cherifi <span class="accent">Khawla</span></h1>
     <p class="sub">École Nationale Supérieure de Mostaganem &nbsp;·&nbsp; 2VS</p>
@@ -371,14 +406,13 @@
       <p class="sec-sub">Semestres 1 &amp; 2 combinés</p>
     </div>
 
-    <!-- Desktop header -->
+    <!-- Desktop header (5 cols, no restore) -->
     <div class="tbl-header">
       <div>Matière</div>
       <div>Coef</div>
       <div>TD <span style="opacity:.45;font-size:.55rem">(fixe)</span></div>
       <div class="th-emd">EMD</div>
       <div class="th-moy">Moyenne</div>
-      <div></div>
     </div>
 
     <!-- Rows injected by JS -->
@@ -389,17 +423,34 @@
       <div style="font-size:.78rem;color:rgba(201,168,76,.55);font-weight:600;">
         TOTAL <span style="color:rgba(201,168,76,.3)">/15</span>
       </div>
-      <!-- spacers desktop -->
       <div class="tbl-footer-hidden"></div>
       <div class="tbl-footer-hidden"></div>
       <div class="tbl-footer-hidden"></div>
       <div id="footMoy" style="text-align:center;"></div>
-      <div class="tbl-footer-hidden"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       EMD CONTROL SECTION
+  ══════════════════════════════════════════════ -->
+  <div class="emd-control-section fu fd3">
+    <div class="emd-ctrl-header">
+      <div>
+        <p class="sec-title">Saisie des Notes EMD</p>
+        <p class="sec-sub">Matières avec moyenne insuffisante — modifiez ici</p>
+      </div>
+      <div class="emd-ctrl-badge">
+        ✦ &nbsp;Zone de contrôle
+      </div>
+    </div>
+
+    <div class="emd-inputs-row" id="emdControlRow">
+      <!-- Injected by JS -->
     </div>
   </div>
 
   <!-- RESULT CARD -->
-  <div class="card-result fu fd3">
+  <div class="card-result fu fd4">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
       <div style="width:3px;height:22px;background:var(--gold);border-radius:2px;flex-shrink:0;"></div>
       <h2 class="sec-title">Résultat Final</h2>
@@ -438,24 +489,23 @@
 </div>
 
 <script>
-// ─── Data ─────────────────────────────────────────────────────────────────
+// ─── Data ──────────────────────────────────────────────────────────────────
 const SUBJECTS = [
   { name: 'Algèbre',    coef: 2, td: 13.5,  emd: 9    },
   { name: 'Proba',      coef: 2, td: 12.5,  emd: 9    },
   { name: 'Mesure',     coef: 2, td: 11.75, emd: 8    },
   { name: 'Équation',   coef: 2, td: 12,    emd: 5.5  },
   { name: 'Psycho',     coef: 1, td: 7.75,  emd: 7.75 },
-  { name: 'GÉO',       coef: 2, td: 14.5,  emd: 8    },
+  { name: 'GÉO',        coef: 2, td: 14.5,  emd: 8    },
   { name: 'Complexe',   coef: 2, td: 12,    emd: 9    },
   { name: 'Didactique', coef: 2, td: 12,    emd: 7.5  },
 ];
 const TOTAL_COEF = 15;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────
-const calcMoy   = (td, emd) => (td + emd * 2) / 3;
-const fmt       = n => n.toFixed(2);
-const badgeCls  = n => n > 10 ? 'moy-pass' : n >= 10 ? 'moy-warn' : 'moy-fail';
-const colorFor  = n => n >= 12 ? 'var(--jade)' : n >= 10 ? 'var(--amber)' : 'var(--coral)';
+const calcMoy  = (td, emd) => (td + emd * 2) / 3;
+const fmt      = n => n.toFixed(2);
+const badgeCls = n => n > 10 ? 'moy-pass' : n >= 10 ? 'moy-warn' : 'moy-fail';
+const colorFor = n => n >= 12 ? 'var(--jade)' : n >= 10 ? 'var(--amber)' : 'var(--coral)';
 
 function setWithPop(el, text) {
   if (!el || el.dataset.last === text) return;
@@ -467,21 +517,23 @@ function setWithPop(el, text) {
   setTimeout(() => el.classList.remove('pop'), 250);
 }
 
-// ─── Build rows ───────────────────────────────────────────────────────────
+// Identify editable subjects (original moy < 10)
+const editableIndices = SUBJECTS
+  .map((s, i) => ({ i, locked: calcMoy(s.td, s.emd) >= 10 }))
+  .filter(x => !x.locked)
+  .map(x => x.i);
+
+// ─── Build TABLE rows (all EMD locked / display-only) ──────────────────────
 const container = document.getElementById('rowsContainer');
 
 SUBJECTS.forEach((s, i) => {
-  const origMoy = calcMoy(s.td, s.emd);
-  const locked  = origMoy >= 10;
+  const origMoy   = calcMoy(s.td, s.emd);
+  const isEditable = editableIndices.includes(i);
 
-  const emdCell = locked
-    ? `<span class="emd-locked">🔒 ${fmt(s.emd)}</span>`
-    : `<input class="emd-input" id="emd_${i}" type="number"
-             inputmode="decimal" min="0" max="20" step="0.25" value="${s.emd}" />`;
-
-  const restoreCell = locked
-    ? ''
-    : `<button class="btn-restore hidden" id="restore_${i}">↺ Restaurer</button>`;
+  // EMD cell: locked display for everyone; editable ones get a slight gold tint
+  const emdDisplay = isEditable
+    ? `<span class="emd-locked-display editable-src" id="tbl_emd_${i}">${fmt(s.emd)}</span>`
+    : `<span class="emd-locked-display" id="tbl_emd_${i}">🔒 ${fmt(s.emd)}</span>`;
 
   const row = document.createElement('div');
   row.className = 'subject-row';
@@ -498,51 +550,78 @@ SUBJECTS.forEach((s, i) => {
     </div>
     <div class="cell cell-emd">
       <span class="mob-label mob-label-emd">EMD</span>
-      ${emdCell}
+      ${emdDisplay}
     </div>
     <div class="cell cell-moy">
       <span class="mob-label mob-label-moy">Moy</span>
       <span class="moy-badge ${badgeCls(origMoy)}" id="moy_${i}">${fmt(origMoy)}</span>
     </div>
-    <div class="cell cell-restore">
-      ${restoreCell}
-    </div>
   `;
   container.appendChild(row);
-
-  // Wire events for editable rows
-  if (!locked) {
-    const inp = document.getElementById(`emd_${i}`);
-    const btn = document.getElementById(`restore_${i}`);
-
-    inp.addEventListener('input', () => {
-      const modified = parseFloat(inp.value) !== s.emd;
-      inp.classList.toggle('modified', modified);
-      if (btn) btn.classList.toggle('hidden', !modified);
-      recalculate();
-    });
-
-    btn && btn.addEventListener('click', () => {
-      inp.value = s.emd;
-      inp.classList.remove('modified');
-      btn.classList.add('hidden');
-      recalculate();
-    });
-  }
 });
 
-// ─── Recalculation ────────────────────────────────────────────────────────
+// ─── Build EMD CONTROL SECTION (4 inputs, one per editable subject) ────────
+const ctrlRow = document.getElementById('emdControlRow');
+
+editableIndices.forEach(i => {
+  const s = SUBJECTS[i];
+
+  const item = document.createElement('div');
+  item.className = 'emd-ctrl-item';
+  item.innerHTML = `
+    <div class="emd-ctrl-label">${s.name}</div>
+    <div class="emd-ctrl-sublabel">coef&nbsp;${s.coef} &nbsp;·&nbsp; TD&nbsp;${fmt(s.td)}</div>
+    <input
+      class="emd-ctrl-input"
+      id="ctrl_emd_${i}"
+      type="number"
+      inputmode="decimal"
+      min="0" max="20" step="0.25"
+      value="${s.emd}"
+      aria-label="Note EMD pour ${s.name}"
+    />
+    <button class="emd-ctrl-restore hidden" id="ctrl_restore_${i}" aria-label="Restaurer ${s.name}">
+      ↺ Restaurer
+    </button>
+  `;
+  ctrlRow.appendChild(item);
+
+  const inp = document.getElementById(`ctrl_emd_${i}`);
+  const btn = document.getElementById(`ctrl_restore_${i}`);
+
+  inp.addEventListener('input', () => {
+    const modified = parseFloat(inp.value) !== s.emd;
+    inp.classList.toggle('modified', modified);
+    btn.classList.toggle('hidden', !modified);
+    recalculate();
+  });
+
+  btn.addEventListener('click', () => {
+    inp.value = s.emd;
+    inp.classList.remove('modified');
+    btn.classList.add('hidden');
+    recalculate();
+  });
+});
+
+// ─── Recalculation ─────────────────────────────────────────────────────────
 function recalculate() {
   let sumPond = 0;
 
   SUBJECTS.forEach((s, i) => {
-    const locked = calcMoy(s.td, s.emd) >= 10;
     let emd = s.emd;
-    if (!locked) {
-      const inp = document.getElementById(`emd_${i}`);
-      const v   = parseFloat(inp?.value);
+
+    // If editable, read value from the CONTROL section input
+    if (editableIndices.includes(i)) {
+      const ctrlInp = document.getElementById(`ctrl_emd_${i}`);
+      const v = parseFloat(ctrlInp?.value);
       if (!isNaN(v)) emd = Math.min(20, Math.max(0, v));
+
+      // Mirror to table display
+      const tblEmd = document.getElementById(`tbl_emd_${i}`);
+      if (tblEmd) tblEmd.textContent = fmt(emd);
     }
+
     const m = calcMoy(s.td, emd);
     sumPond += m * s.coef;
 
@@ -555,12 +634,10 @@ function recalculate() {
 
   const rtg = sumPond / TOTAL_COEF;
 
-  // Footer
   const footMoy = document.getElementById('footMoy');
   if (footMoy)
     footMoy.innerHTML = `<span class="moy-badge ${badgeCls(rtg)}">${fmt(rtg)}</span>`;
 
-  // Cards
   const sp = document.getElementById('resSumPond');
   if (sp) setWithPop(sp, fmt(sumPond));
 
