@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculatrice </title>
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Calculatrice</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -92,7 +91,7 @@
   }
   .sec-sub { font-size: .72rem; color: rgba(245,240,232,.3); margin-top: 3px; }
 
-  /* ── TABLE HEADER ── */
+  /* TABLE HEADER */
   .tbl-header {
     display: grid;
     grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px;
@@ -109,7 +108,7 @@
   .th-emd { color: rgba(228,201,126,.55) !important; }
   .th-moy { color: rgba(46,196,165,.55) !important; }
 
-  /* ── SUBJECT ROW ── */
+  /* SUBJECT ROW */
   .subject-row {
     display: grid;
     grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px;
@@ -128,7 +127,7 @@
 
   .mob-label { display: none; }
 
-  /* ── FOOTER ROW ── */
+  /* FOOTER ROW */
   .tbl-footer {
     display: grid;
     grid-template-columns: minmax(100px,1fr) 52px 95px 105px 95px;
@@ -140,7 +139,7 @@
   .tbl-footer > div { padding: 4px 8px; text-align: center; }
   .tbl-footer > div:first-child { text-align: left; padding-left: 14px; }
 
-  /* ── ELEMENTS ── */
+  /* ELEMENTS */
   .mat-name { font-weight: 600; font-size: clamp(.82rem, 2.5vw, .92rem); }
 
   .coef-badge {
@@ -156,9 +155,14 @@
     font-size: .86rem; font-weight: 500;
     border: 1px solid rgba(255,255,255,.07);
     user-select: none;
+    transition: color .3s;
+  }
+  .td-val.linked {
+    color: rgba(228,201,126,.55);
+    border-color: rgba(201,168,76,.2);
+    background: rgba(255,255,255,.04);
   }
 
-  /* All EMD cells in the table are now locked-style */
   .emd-locked-display {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 6px 12px; border-radius: 9px;
@@ -181,9 +185,7 @@
   .moy-warn  { background: rgba(245,166,35,.15);  color: var(--amber); border: 1px solid rgba(245,166,35,.35); }
   .moy-fail  { background: rgba(224,92,92,.15);   color: var(--coral); border: 1px solid rgba(224,92,92,.35); }
 
-  /* ══════════════════════════════════════════════════
-     EMD CONTROL SECTION  (4 inputs in one line)
-  ══════════════════════════════════════════════════ */
+  /* ══ EMD CONTROL SECTION ══ */
   .emd-control-section {
     background: rgba(13,27,62,.85);
     backdrop-filter: blur(20px);
@@ -201,8 +203,8 @@
   }
 
   .emd-ctrl-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 18px; flex-wrap: wrap; gap: 8px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
   }
   .emd-ctrl-badge {
     display: inline-flex; align-items: center; gap: 6px;
@@ -211,6 +213,37 @@
     border: 1px solid rgba(201,168,76,.25); border-radius: 999px;
     padding: 4px 12px;
   }
+
+  /* Action buttons row */
+  .ctrl-actions {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  }
+
+  .btn-suggest {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 10px;
+    background: rgba(46,196,165,.1); border: 1px solid rgba(46,196,165,.35);
+    color: var(--jade); font-family: 'Outfit', sans-serif;
+    font-size: .74rem; font-weight: 600; cursor: pointer;
+    transition: background .2s, transform .15s;
+    white-space: nowrap; min-height: 36px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-suggest:hover { background: rgba(46,196,165,.2); }
+  .btn-suggest:active { transform: scale(.95); }
+
+  .btn-restore-all {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 10px;
+    background: rgba(201,168,76,.08); border: 1px solid rgba(201,168,76,.28);
+    color: rgba(228,201,126,.7); font-family: 'Outfit', sans-serif;
+    font-size: .74rem; font-weight: 600; cursor: pointer;
+    transition: background .2s, color .2s, transform .15s;
+    white-space: nowrap; min-height: 36px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-restore-all:hover { background: rgba(201,168,76,.18); color: var(--gold-light); }
+  .btn-restore-all:active { transform: scale(.95); }
 
   .emd-inputs-row {
     display: grid;
@@ -230,6 +263,14 @@
     border-color: rgba(201,168,76,.4);
     background: rgba(201,168,76,.04);
   }
+  /* Special: Psycho item gets a jade tint since it's "note unique" */
+  .emd-ctrl-item.same-note {
+    border-color: rgba(46,196,165,.18);
+  }
+  .emd-ctrl-item.same-note:focus-within {
+    border-color: rgba(46,196,165,.45);
+    background: rgba(46,196,165,.04);
+  }
 
   .emd-ctrl-label {
     font-size: .7rem; font-weight: 600; letter-spacing: .06em;
@@ -237,7 +278,19 @@
   }
   .emd-ctrl-sublabel {
     font-size: .58rem; color: rgba(245,240,232,.3); text-align: center;
-    margin-top: -6px;
+    margin-top: -6px; line-height: 1.4;
+  }
+  .emd-ctrl-sublabel.linked-note {
+    color: rgba(46,196,165,.5);
+    font-weight: 600;
+  }
+
+  .same-note-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: .56rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--jade); background: rgba(46,196,165,.1);
+    border: 1px solid rgba(46,196,165,.25); border-radius: 999px;
+    padding: 2px 8px; margin-top: -4px;
   }
 
   .emd-ctrl-input {
@@ -250,6 +303,16 @@
     transition: border-color .2s, background .2s, box-shadow .2s;
     min-height: 44px;
     -webkit-appearance: none;
+  }
+  .emd-ctrl-input.same-note-input {
+    border-color: rgba(46,196,165,.4);
+    background: rgba(46,196,165,.07);
+    color: var(--jade);
+  }
+  .emd-ctrl-input.same-note-input:focus {
+    border-color: var(--jade);
+    background: rgba(46,196,165,.14);
+    box-shadow: 0 0 0 3px rgba(46,196,165,.12);
   }
   .emd-ctrl-input:focus {
     border-color: var(--gold);
@@ -276,7 +339,43 @@
   .emd-ctrl-restore:active { transform: scale(.95); }
   .emd-ctrl-restore.hidden { visibility: hidden; pointer-events: none; }
 
-  /* ── RESULT SECTION ── */
+  /* INLINE RTG BAR */
+  .rtg-inline-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 3vw, 24px);
+    margin-top: 20px;
+    padding: clamp(12px, 3vw, 18px) clamp(14px, 4vw, 24px);
+    background: rgba(201,168,76,.07);
+    border: 1px solid rgba(201,168,76,.22);
+    border-radius: 14px;
+    flex-wrap: wrap;
+  }
+  .rtg-inline-label {
+    font-size: .62rem; text-transform: uppercase; letter-spacing: .22em;
+    color: rgba(201,168,76,.5); flex-shrink: 0;
+  }
+  .rtg-inline-divider {
+    width: 1px; height: 28px;
+    background: rgba(201,168,76,.2);
+    flex-shrink: 0;
+  }
+  .rtg-inline-val {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 700;
+    color: var(--gold);
+    transition: color .4s;
+    line-height: 1;
+  }
+  .rtg-inline-pill {
+    display: inline-block; padding: 5px 16px; border-radius: 999px;
+    font-size: .76rem; font-weight: 600;
+    transition: all .3s;
+  }
+
+  /* RESULT SECTION */
   .res-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -312,7 +411,7 @@
   .pill-warn { background: rgba(245,166,35,.15);  color: var(--amber); border: 1px solid rgba(245,166,35,.35); }
   .pill-fail { background: rgba(224,92,92,.15);   color: var(--coral); border: 1px solid rgba(224,92,92,.35); }
 
-  /* ── ANIMATIONS ── */
+  /* ANIMATIONS */
   @keyframes pop { 0%{transform:scale(1)} 45%{transform:scale(1.18)} 100%{transform:scale(1)} }
   .pop { animation: pop .22s ease; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -322,7 +421,7 @@
   .fd3 { animation-delay: .34s; }
   .fd4 { animation-delay: .44s; }
 
-  /* ── MOBILE ≤ 620px ── */
+  /* MOBILE ≤ 620px */
   @media (max-width: 620px) {
     .tbl-header { display: none; }
 
@@ -362,15 +461,23 @@
     }
     .tbl-footer-hidden { display: none; }
 
-    /* EMD control section — 2x2 grid on mobile */
+    /* EMD control — 2x2 on mobile */
     .emd-inputs-row {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .emd-ctrl-header { flex-direction: column; }
+    .ctrl-actions { width: 100%; }
+    .btn-suggest, .btn-restore-all { flex: 1; justify-content: center; }
+
+    .rtg-inline-divider { display: none; }
+    .rtg-inline-bar { gap: 12px; }
   }
 
   @media (max-width: 400px) {
     .emd-inputs-row { grid-template-columns: repeat(2, 1fr); }
     .emd-ctrl-input { width: 80px; }
+    .btn-suggest, .btn-restore-all { font-size: .7rem; padding: 8px 10px; }
   }
 </style>
 </head>
@@ -406,7 +513,6 @@
       <p class="sec-sub">Semestres 1 &amp; 2 combinés</p>
     </div>
 
-    <!-- Desktop header (5 cols, no restore) -->
     <div class="tbl-header">
       <div>Matière</div>
       <div>Coef</div>
@@ -415,10 +521,8 @@
       <div class="th-moy">Moyenne</div>
     </div>
 
-    <!-- Rows injected by JS -->
     <div id="rowsContainer"></div>
 
-    <!-- Footer -->
     <div class="tbl-footer" id="tblFooter">
       <div style="font-size:.78rem;color:rgba(201,168,76,.55);font-weight:600;">
         TOTAL <span style="color:rgba(201,168,76,.3)">/15</span>
@@ -430,22 +534,33 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       EMD CONTROL SECTION
-  ══════════════════════════════════════════════ -->
+  <!-- EMD CONTROL SECTION -->
   <div class="emd-control-section fu fd3">
     <div class="emd-ctrl-header">
       <div>
         <p class="sec-title">Saisie des Notes EMD</p>
         <p class="sec-sub">Matières avec moyenne insuffisante — modifiez ici</p>
       </div>
-      <div class="emd-ctrl-badge">
-        ✦ &nbsp;Zone de contrôle
+      <!-- Action buttons -->
+      <div class="ctrl-actions">
+        <button class="btn-suggest" id="suggestBtn" onclick="suggestNotes()" aria-label="Suggérer des notes minimales pour atteindre 10">
+          ✦ Suggérer ≥ 10
+        </button>
+        <button class="btn-restore-all" onclick="restoreAll()" aria-label="Restaurer toutes les notes originales">
+          ↺ Restaurer tout
+        </button>
       </div>
     </div>
 
-    <div class="emd-inputs-row" id="emdControlRow">
-      <!-- Injected by JS -->
+    <div class="emd-inputs-row" id="emdControlRow"></div>
+
+    <!-- INLINE RTG DISPLAY -->
+    <div class="rtg-inline-bar">
+      <span class="rtg-inline-label">Moyen RTG</span>
+      <div class="rtg-inline-divider"></div>
+      <span class="rtg-inline-val" id="rtgInlineVal">—</span>
+      <div class="rtg-inline-divider"></div>
+      <span class="rtg-inline-pill pill-warn" id="rtgInlinePill">En attente…</span>
     </div>
   </div>
 
@@ -495,7 +610,7 @@ const SUBJECTS = [
   { name: 'Proba',      coef: 2, td: 12.5,  emd: 9    },
   { name: 'Mesure',     coef: 2, td: 11.75, emd: 8    },
   { name: 'Équation',   coef: 2, td: 12,    emd: 5.5  },
-  { name: 'Psycho',     coef: 1, td: 7.75,  emd: 7.75 },
+  { name: 'Psycho',     coef: 1, td: 7.75,  emd: 7.75, sameNote: true },
   { name: 'GÉO',        coef: 2, td: 14.5,  emd: 8    },
   { name: 'Complexe',   coef: 2, td: 12,    emd: 9    },
   { name: 'Didactique', coef: 2, td: 12,    emd: 7.5  },
@@ -517,20 +632,44 @@ function setWithPop(el, text) {
   setTimeout(() => el.classList.remove('pop'), 250);
 }
 
-// Identify editable subjects (original moy < 10)
+// Editable = original moy < 10
 const editableIndices = SUBJECTS
   .map((s, i) => ({ i, locked: calcMoy(s.td, s.emd) >= 10 }))
   .filter(x => !x.locked)
   .map(x => x.i);
 
-// ─── Build TABLE rows (all EMD locked / display-only) ──────────────────────
+// Build full list of valid 0.25-step values per editable subject.
+// Range: [minimum to reach moy>=10 , cap]
+//   sameNote (Psycho) cap = 16.5  |  others cap = 14.0
+const suggestPool = {};
+editableIndices.forEach(i => {
+  const s   = SUBJECTS[i];
+  const cap = s.sameNote ? 16.5 : 14.0;
+  const minEmd = s.sameNote
+    ? 10
+    : Math.ceil(((30 - s.td) / 2) * 4) / 4;
+  const pool = [];
+  for (let v = minEmd; v <= cap + 1e-9; v = Math.round((v + 0.25) * 100) / 100) {
+    pool.push(Math.round(v * 4) / 4);
+  }
+  suggestPool[i] = pool;
+});
+
+// Remember last pick per subject to avoid immediate repeats
+const lastSuggested = {};
+
+// ─── Build TABLE rows ───────────────────────────────────────────────────────
 const container = document.getElementById('rowsContainer');
 
 SUBJECTS.forEach((s, i) => {
-  const origMoy   = calcMoy(s.td, s.emd);
+  const origMoy    = calcMoy(s.td, s.emd);
   const isEditable = editableIndices.includes(i);
 
-  // EMD cell: locked display for everyone; editable ones get a slight gold tint
+  // For sameNote subjects, TD cell gets a linked style and an id
+  const tdDisplay = s.sameNote
+    ? `<span class="td-val linked" id="tbl_td_${i}">${fmt(s.td)}</span>`
+    : `<span class="td-val">${fmt(s.td)}</span>`;
+
   const emdDisplay = isEditable
     ? `<span class="emd-locked-display editable-src" id="tbl_emd_${i}">${fmt(s.emd)}</span>`
     : `<span class="emd-locked-display" id="tbl_emd_${i}">🔒 ${fmt(s.emd)}</span>`;
@@ -539,14 +678,14 @@ SUBJECTS.forEach((s, i) => {
   row.className = 'subject-row';
   row.innerHTML = `
     <div class="cell cell-name">
-      <span class="mat-name">${s.name}</span>
+      <span class="mat-name">${s.name}${s.sameNote ? ' <span style="font-size:.6rem;color:var(--jade);opacity:.7">(note unique)</span>' : ''}</span>
     </div>
     <div class="cell cell-coef">
       <span class="coef-badge">${s.coef}</span>
     </div>
     <div class="cell cell-td">
       <span class="mob-label">TD</span>
-      <span class="td-val">${fmt(s.td)}</span>
+      ${tdDisplay}
     </div>
     <div class="cell cell-emd">
       <span class="mob-label mob-label-emd">EMD</span>
@@ -560,25 +699,31 @@ SUBJECTS.forEach((s, i) => {
   container.appendChild(row);
 });
 
-// ─── Build EMD CONTROL SECTION (4 inputs, one per editable subject) ────────
+// ─── Build EMD CONTROL SECTION ─────────────────────────────────────────────
 const ctrlRow = document.getElementById('emdControlRow');
 
 editableIndices.forEach(i => {
   const s = SUBJECTS[i];
 
   const item = document.createElement('div');
-  item.className = 'emd-ctrl-item';
+  item.className = s.sameNote ? 'emd-ctrl-item same-note' : 'emd-ctrl-item';
+
+  const sublabelHtml = s.sameNote
+    ? `<div class="emd-ctrl-sublabel">coef&nbsp;${s.coef}</div>
+       <div class="same-note-tag">TD = EMD</div>`
+    : `<div class="emd-ctrl-sublabel">coef&nbsp;${s.coef} &nbsp;·&nbsp; TD&nbsp;${fmt(s.td)}</div>`;
+
   item.innerHTML = `
     <div class="emd-ctrl-label">${s.name}</div>
-    <div class="emd-ctrl-sublabel">coef&nbsp;${s.coef} &nbsp;·&nbsp; TD&nbsp;${fmt(s.td)}</div>
+    ${sublabelHtml}
     <input
-      class="emd-ctrl-input"
+      class="emd-ctrl-input${s.sameNote ? ' same-note-input' : ''}"
       id="ctrl_emd_${i}"
       type="number"
       inputmode="decimal"
       min="0" max="20" step="0.25"
       value="${s.emd}"
-      aria-label="Note EMD pour ${s.name}"
+      aria-label="${s.sameNote ? 'Note unique pour ' + s.name : 'Note EMD pour ' + s.name}"
     />
     <button class="emd-ctrl-restore hidden" id="ctrl_restore_${i}" aria-label="Restaurer ${s.name}">
       ↺ Restaurer
@@ -592,6 +737,10 @@ editableIndices.forEach(i => {
   inp.addEventListener('input', () => {
     const modified = parseFloat(inp.value) !== s.emd;
     inp.classList.toggle('modified', modified);
+    // Keep same-note-input class unless modified
+    if (s.sameNote) {
+      inp.classList.toggle('same-note-input', !modified);
+    }
     btn.classList.toggle('hidden', !modified);
     recalculate();
   });
@@ -599,30 +748,85 @@ editableIndices.forEach(i => {
   btn.addEventListener('click', () => {
     inp.value = s.emd;
     inp.classList.remove('modified');
+    if (s.sameNote) inp.classList.add('same-note-input');
     btn.classList.add('hidden');
     recalculate();
   });
 });
+
+// ─── Suggest notes — random pick from valid range each press ─────────────────
+function suggestNotes() {
+  editableIndices.forEach(i => {
+    const s    = SUBJECTS[i];
+    const inp  = document.getElementById(`ctrl_emd_${i}`);
+    const rbtn = document.getElementById(`ctrl_restore_${i}`);
+    const pool = suggestPool[i];
+
+    // Pick randomly, avoiding the same value as last time if pool has > 1 entry
+    let idx;
+    if (pool.length === 1) {
+      idx = 0;
+    } else {
+      do { idx = Math.floor(Math.random() * pool.length); }
+      while (pool[idx] === lastSuggested[i]);
+    }
+    const suggested = pool[idx];
+    lastSuggested[i] = suggested;
+
+    inp.value = suggested;
+    const modified = suggested !== s.emd;
+    inp.classList.toggle('modified', modified);
+    if (s.sameNote) inp.classList.toggle('same-note-input', !modified);
+    rbtn.classList.toggle('hidden', !modified);
+  });
+
+  recalculate();
+}
+
+// ─── Restore all to original notes ─────────────────────────────────────────
+function restoreAll() {
+  const sbtn = document.getElementById('suggestBtn');
+  if (sbtn) sbtn.innerHTML = '✦ Suggérer ≥ 10';
+  editableIndices.forEach(i => {
+    const s   = SUBJECTS[i];
+    const inp = document.getElementById(`ctrl_emd_${i}`);
+    const btn = document.getElementById(`ctrl_restore_${i}`);
+    inp.value = s.emd;
+    inp.classList.remove('modified');
+    if (s.sameNote) inp.classList.add('same-note-input');
+    btn.classList.add('hidden');
+  });
+  recalculate();
+}
 
 // ─── Recalculation ─────────────────────────────────────────────────────────
 function recalculate() {
   let sumPond = 0;
 
   SUBJECTS.forEach((s, i) => {
+    let td  = s.td;
     let emd = s.emd;
 
-    // If editable, read value from the CONTROL section input
     if (editableIndices.includes(i)) {
       const ctrlInp = document.getElementById(`ctrl_emd_${i}`);
       const v = parseFloat(ctrlInp?.value);
-      if (!isNaN(v)) emd = Math.min(20, Math.max(0, v));
+      if (!isNaN(v)) {
+        emd = Math.min(20, Math.max(0, v));
+        // Psycho: TD and EMD are the same note
+        if (s.sameNote) {
+          td = emd;
+          // Mirror TD in table
+          const tblTd = document.getElementById(`tbl_td_${i}`);
+          if (tblTd) tblTd.textContent = fmt(td);
+        }
+      }
 
-      // Mirror to table display
+      // Mirror EMD in table
       const tblEmd = document.getElementById(`tbl_emd_${i}`);
       if (tblEmd) tblEmd.textContent = fmt(emd);
     }
 
-    const m = calcMoy(s.td, emd);
+    const m = calcMoy(td, emd);
     sumPond += m * s.coef;
 
     const badge = document.getElementById(`moy_${i}`);
@@ -634,16 +838,19 @@ function recalculate() {
 
   const rtg = sumPond / TOTAL_COEF;
 
+  // Footer
   const footMoy = document.getElementById('footMoy');
   if (footMoy)
     footMoy.innerHTML = `<span class="moy-badge ${badgeCls(rtg)}">${fmt(rtg)}</span>`;
 
+  // Result card
   const sp = document.getElementById('resSumPond');
   if (sp) setWithPop(sp, fmt(sumPond));
 
   const big = document.getElementById('rtgBig');
   if (big) { big.style.color = colorFor(rtg); setWithPop(big, fmt(rtg)); }
 
+  // Status badge (result card)
   const pill = document.getElementById('statusBadge');
   if (pill) {
     const [label, cls] =
@@ -653,6 +860,24 @@ function recalculate() {
                   ['✦ Résultat Insuffisant','pill-fail'];
     pill.className   = `status-pill ${cls}`;
     pill.textContent = label;
+  }
+
+  // ── INLINE RTG (in control panel) ──
+  const inlineVal  = document.getElementById('rtgInlineVal');
+  const inlinePill = document.getElementById('rtgInlinePill');
+
+  if (inlineVal) {
+    inlineVal.style.color = colorFor(rtg);
+    setWithPop(inlineVal, fmt(rtg));
+  }
+  if (inlinePill) {
+    const [label2, cls2] =
+      rtg >= 14 ? ['✦ Mention Très Bien', 'pill-pass'] :
+      rtg >= 12 ? ['✦ Mention Bien',      'pill-pass'] :
+      rtg >= 10 ? ['✦ Admis(e)',          'pill-warn'] :
+                  ['✦ Insuffisant',        'pill-fail'];
+    inlinePill.className   = `rtg-inline-pill ${cls2}`;
+    inlinePill.textContent = label2;
   }
 }
 
