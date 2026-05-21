@@ -294,7 +294,7 @@
   }
 
   .emd-ctrl-input {
-    width: 90px; padding: 9px 6px;
+    width: 84px; padding: 9px 6px;
     background: rgba(228,201,126,.08);
     border: 1.5px solid rgba(201,168,76,.35);
     border-radius: 10px; color: var(--gold-light);
@@ -304,6 +304,27 @@
     min-height: 44px;
     -webkit-appearance: none;
   }
+  .emd-ctrl-input-wrap {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .step-btn {
+    width: 30px; height: 30px; border-radius: 8px;
+    border: 1px solid transparent; font-weight: 700; font-size: .9rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+    transition: transform .12s, background .2s, border-color .2s, color .2s;
+  }
+  .step-btn:active { transform: scale(.95); }
+  .step-btn.minus {
+    background: rgba(224,92,92,.12); border-color: rgba(224,92,92,.35);
+    color: var(--coral);
+  }
+  .step-btn.minus:hover { background: rgba(224,92,92,.22); }
+  .step-btn.plus {
+    background: rgba(46,196,165,.12); border-color: rgba(46,196,165,.35);
+    color: var(--jade);
+  }
+  .step-btn.plus:hover { background: rgba(46,196,165,.22); }
   .emd-ctrl-input.same-note-input {
     border-color: rgba(46,196,165,.4);
     background: rgba(46,196,165,.07);
@@ -476,7 +497,7 @@
 
   @media (max-width: 400px) {
     .emd-inputs-row { grid-template-columns: repeat(2, 1fr); }
-    .emd-ctrl-input { width: 80px; }
+    .emd-ctrl-input { width: 74px; }
     .btn-suggest, .btn-restore-all { font-size: .7rem; padding: 8px 10px; }
   }
 </style>
@@ -658,6 +679,54 @@ editableIndices.forEach(i => {
 // Remember last pick per subject to avoid immediate repeats
 const lastSuggested = {};
 
+const STEP = 0.25;
+const stepRound = v => Math.round(v * 4) / 4;
+const getMinValue = inp => {
+  const minVal = parseFloat(inp?.getAttribute('min'));
+  return isNaN(minVal) ? 0 : minVal;
+};
+
+function applyStep(inp, delta) {
+  const current = parseFloat(inp.value);
+  const base = isNaN(current) ? 0 : current;
+  const minVal = getMinValue(inp);
+  const next = Math.min(20, Math.max(minVal, stepRound(base + delta)));
+  inp.value = next;
+  inp.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function setupHold(btn, inp, delta) {
+  let intervalId = null;
+  let timeoutId = null;
+
+  const clearTimers = () => {
+    if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+    if (intervalId) { clearInterval(intervalId); intervalId = null; }
+  };
+
+  const start = e => {
+    if (e.button !== undefined && e.button !== 0) return;
+    e.preventDefault();
+    if (btn.setPointerCapture) btn.setPointerCapture(e.pointerId);
+    applyStep(inp, delta);
+    timeoutId = setTimeout(() => {
+      intervalId = setInterval(() => applyStep(inp, delta), 80);
+    }, 300);
+  };
+
+  btn.addEventListener('pointerdown', start);
+  btn.addEventListener('pointerup', clearTimers);
+  btn.addEventListener('pointerleave', clearTimers);
+  btn.addEventListener('pointercancel', clearTimers);
+  btn.addEventListener('lostpointercapture', clearTimers);
+  btn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      applyStep(inp, delta);
+    }
+  });
+}
+
 // ─── Build TABLE rows ───────────────────────────────────────────────────────
 const container = document.getElementById('rowsContainer');
 
@@ -716,15 +785,19 @@ editableIndices.forEach(i => {
   item.innerHTML = `
     <div class="emd-ctrl-label">${s.name}</div>
     ${sublabelHtml}
-    <input
-      class="emd-ctrl-input${s.sameNote ? ' same-note-input' : ''}"
-      id="ctrl_emd_${i}"
-      type="number"
-      inputmode="decimal"
-      min="0" max="20" step="0.25"
-      value="${s.emd}"
-      aria-label="${s.sameNote ? 'Note unique pour ' + s.name : 'Note EMD pour ' + s.name}"
-    />
+    <div class="emd-ctrl-input-wrap">
+      <button class="step-btn minus" type="button" id="ctrl_dec_${i}" aria-label="Diminuer ${s.name} de 0.25">-</button>
+      <input
+        class="emd-ctrl-input${s.sameNote ? ' same-note-input' : ''}"
+        id="ctrl_emd_${i}"
+        type="number"
+        inputmode="decimal"
+        min="${s.emd}" max="20" step="0.25"
+        value="${s.emd}"
+        aria-label="${s.sameNote ? 'Note unique pour ' + s.name : 'Note EMD pour ' + s.name}"
+      />
+      <button class="step-btn plus" type="button" id="ctrl_inc_${i}" aria-label="Augmenter ${s.name} de 0.25">+</button>
+    </div>
     <button class="emd-ctrl-restore hidden" id="ctrl_restore_${i}" aria-label="Restaurer ${s.name}">
       ↺ Restaurer
     </button>
@@ -733,6 +806,11 @@ editableIndices.forEach(i => {
 
   const inp = document.getElementById(`ctrl_emd_${i}`);
   const btn = document.getElementById(`ctrl_restore_${i}`);
+  const decBtn = document.getElementById(`ctrl_dec_${i}`);
+  const incBtn = document.getElementById(`ctrl_inc_${i}`);
+
+  if (decBtn) setupHold(decBtn, inp, -STEP);
+  if (incBtn) setupHold(incBtn, inp, STEP);
 
   inp.addEventListener('input', () => {
     const modified = parseFloat(inp.value) !== s.emd;
@@ -811,7 +889,8 @@ function recalculate() {
       const ctrlInp = document.getElementById(`ctrl_emd_${i}`);
       const v = parseFloat(ctrlInp?.value);
       if (!isNaN(v)) {
-        emd = Math.min(20, Math.max(0, v));
+        const minVal = getMinValue(ctrlInp);
+        emd = Math.min(20, Math.max(minVal, v));
         // Psycho: TD and EMD are the same note
         if (s.sameNote) {
           td = emd;
