@@ -710,7 +710,7 @@ editableIndices.forEach(i => {
 
   const sublabelHtml = s.sameNote
     ? `<div class="emd-ctrl-sublabel">coef&nbsp;${s.coef}</div>
-       <div class="same-note-tag">TD = EMD</div>`
+       `
     : `<div class="emd-ctrl-sublabel">coef&nbsp;${s.coef} &nbsp;·&nbsp; TD&nbsp;${fmt(s.td)}</div>`;
 
   item.innerHTML = `
